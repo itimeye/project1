@@ -55,10 +55,14 @@ public class ReimbursementControllerServlet extends HttpServlet {
 			}
 			//route to the correct piece of code
 			switch (theCommand) {
-			case "LISTR":
+			case "LIST":
 				listReimb(request,response);break;
 			case "ADD":
 				addReimb(request,response);break;
+			case "APPROVE":
+				approveReimbursement(request,response);break;
+			case "DENY":
+				denyReimbursement(request,response);break;
 			default:
 				listReimb(request,response);
 			}
@@ -68,7 +72,47 @@ public class ReimbursementControllerServlet extends HttpServlet {
 	}
 
 	
+	private void denyReimbursement(HttpServletRequest request, HttpServletResponse response) 
+	throws Exception{
+		// read student id from form data
+		String theReimbursementId = request.getParameter("reimbursementId");
+		
+		// deny student from database
+		reimbursementDbUtil.denyReimb(theReimbursementId);
+		
+		//send them back to "list students page"
+		listReimb(request,response);
+		
+	}
+
+
+	private void approveReimbursement(HttpServletRequest request, HttpServletResponse response) 
+	throws Exception{
+		// read student id from form data
+		String theReimbursementId = request.getParameter("reimbursementId");
+		
+		// approve student from database
+		reimbursementDbUtil.approveReimb(theReimbursementId);
+				
+		//send them back to "list students page"
+		listReimb(request,response);
+	}
+
+
 	private void addReimb(HttpServletRequest request, HttpServletResponse response)throws Exception {
+		// read student info from form data
+		int reimbId = Integer.parseInt(request.getParameter("ReimbursementId"));
+		int amount = Integer.parseInt(request.getParameter("amount"));
+		
+		
+		//create a new student object
+		Reimbursement theReimbursement = new Reimbursement(reimbId,amount);
+		
+		// add the student to the database
+		reimbursementDbUtil.addReimb(theReimbursement);
+		
+		//send back to main page
+		listReimb(request,response);
 		
 	}
 

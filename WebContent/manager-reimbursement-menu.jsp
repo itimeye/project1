@@ -21,13 +21,13 @@
 
 		<!-- View Pending Reimbursement -->
 		<input type="button" value="View Pending Reimbursements"
-			onclick="window.location.href='ManagerReimbursementControllerServlet'; return false;"
+			onclick="window.location.href='ReimbursementControllerServlet'; return false;"
 			class = "view-pending-reimbursment-button"
 		/>
 		
 		<!-- View Resolved Reimbursement -->
 		<input type="button" value="View Resolved Reimbursements"
-			onclick="window.location.href='ManagerResolvedReimbursementControllerServlet'; return false;"
+			onclick="window.location.href='ReimbursementResControllerServlet'; return false;"
 			class = "view-resolved-reimbursment-button"
 		/>
 	</div>

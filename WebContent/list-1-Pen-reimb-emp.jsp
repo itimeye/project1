@@ -13,32 +13,29 @@
 
 	<div id="wrapper">
 		<div id="header">
-			<h2>Resolved Reimbursements</h2>
+			<h2>Your Pending Reimbursement Requests</h2>
 		</div>
 	</div>
 	
 	<div id="container">
 	
 		<div id="content">
-		<input type="hidden" name="command" value="LIST"/>
 		
 		<table>
 		
 			<tr>
 			
-				<th>Reimbursement ID</th>
-				<th>Employee Email</th>
-				<th>Status</th>
+				<th>Reimbursement Id</th>
 				<th>Amount</th>
+				<th>Status</th>
 			
 			</tr>
 			<c:forEach var="tempReimbursement" items="${REIMB_LIST }">
-						
+					<!-- Set up a link for update -->	
 				<tr>
-					<td> ${tempReimbursement.reimbId }</td>
-					<td> ${tempReimbursement.empId }</td>
-					<td> ${tempReimbursement.status }</td>
-					<td> ${tempReimbursement.amount }</td>
+					<td> ${tempReimb.reimbId }</td>
+					<td> ${tempReimb.amount }</td>
+					<td> ${tempReimb.status }</td>
 				</tr>
 			
 			</c:forEach>
@@ -48,7 +45,7 @@
 		<div style="clear: both;"></div>
 		
 		<p>
-			<a href="manager-reimbursement-menu.jsp">Back to Reimbursement Menu</a>
+			<a href="reimbursement-menu.jsp">Back to Reimbursement Menu</a>
 	</div>
 
 </body>

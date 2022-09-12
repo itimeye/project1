@@ -43,22 +43,24 @@ public class LoginServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
-			
-			
-			theLogin(request,response);
-//			theEmployee.setEmail(email);
-//			theEmployee.setPassword(password);
-			
-			
-		}catch(Exception exc) {
-			throw new ServletException(exc);
-		}
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		response.setContentType("text/html");
+        request.getRequestDispatcher("login.jsp").include(request,response);
+
 	}
-
-
-	private void theLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		try {
+			
+//			theLogin(request,response);
+////			theEmployee.setEmail(email);
+////			theEmployee.setPassword(password);
+									
+//		}catch(Exception exc) {
+//			throw new ServletException(exc);
+//		}
+		
 		String theEmpE = request.getParameter("email");
 		String theEmpP = request.getParameter("password");
 		String isM = request.getParameter("isManager");
@@ -90,6 +92,11 @@ public class LoginServlet extends HttpServlet {
 						dispatcher.forward(request, response);
 			}
 		}
+	
 	}
+//
+
+	private void theLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {}
+		
 	
 }

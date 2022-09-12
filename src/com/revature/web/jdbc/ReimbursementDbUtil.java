@@ -82,83 +82,95 @@ public class ReimbursementDbUtil {
 		
 	}
 
-	public void addReimb(Reimbursement theReimbursement, String theEmpId)throws Exception {
+		
+	public void addReimb(Reimbursement theReimbursement) throws Exception {
 		Connection myConn = null;
-		PreparedStatement myStmt = null;
-		int empId;
+		PreparedStatement  myStmt = null;
 		
 		try {
 			// get db connection
 			myConn = dataSource.getConnection();
+			// create sql statement
+			String sql = "insert into reimbursements " 
+					+"(empId, amount) "
+					+"values (?,?)";
 			
-			// create sql for insert
-			String sql = "insert into reimbursements "
-					   + "(empId, amount) "
-					   + "values (?, ?)";
-			
+			//prepare statement
 			myStmt = myConn.prepareStatement(sql);
 			
-			//convert emp ID to int
-			empId = Integer.parseInt(theEmpId);
-			// set the param values for the student
+			//set params
 			myStmt.setInt(1, theReimbursement.getempId());
-			myStmt.setInt(2, theReimbursement.getAmount());
-					
-			// execute sql insert
+			myStmt.setInt(1, theReimbursement.getAmount());
+			
+			
+			//execute sql statement
 			myStmt.execute();
+			
+		}finally {
+			close(myConn,myStmt,null);
 		}
-		finally {
-			// clean up JDBC objects
-			close(myConn, myStmt, null);
-		}		
-	}
-	
-	public List<Reimbursement> getRReimb() throws Exception{
-		List<Reimbursement> reimbs = new ArrayList<>();
 		
+	}
+
+	public void denyReimb(String theReimbursementId) throws Exception{
 		Connection myConn = null;
-		Statement myStmt = null;
-		ResultSet myRs = null;
+		PreparedStatement  myStmt = null;
 		
 		try {
-		//get a connection
-		myConn = dataSource.getConnection();
-		
-		//create sql statement
-		String sql = "SELECT * FROM reimbursements"
-				+ "where (status = 'A' or status ='D') and empId = 1";
-		
-		myStmt = myConn.createStatement();
-		
-		//execute query
-		myRs = myStmt.executeQuery(sql);
-		
-		//process result set
-		while (myRs.next()) {
+			//convert reimbursement id to int
+			int reimbId = Integer.parseInt(theReimbursementId);
 			
-			//retrieve data from result set row
-			int reimbId = myRs.getInt("reimbId");
-			int empId = myRs.getInt("empId");
-			String status = myRs.getString("status");
-			int amount = myRs.getInt("amount");
+			//get connection to database
+			myConn = dataSource.getConnection();
+			//create sql to deny reimb
+			String sql = "update student " 
+					+ "set status= 'D' "
+					+ "where id =?";
+			//prepare statement
+			myStmt = myConn.prepareStatement(sql);
+						
+			//set params
+			myStmt.setInt(1, reimbId);
+			//execute sql statment
+			myStmt.execute();
 			
-			//create new Reimbursement object
-			Reimbursement tempReimb = new Reimbursement(reimbId, empId, status, amount);
-			
-			// add it to the list of Reimbursements
-			reimbs.add(tempReimb);
-		}
-					
-			return reimbs;
 		}finally {
-			//close JDBC objects
-			close(myConn, myStmt, myRs);
+			close(myConn,myStmt,null);
 		}
 		
+	}
+
+	public void approveReimb(String theReimbursementId)throws Exception {
+		Connection myConn = null;
+		PreparedStatement  myStmt = null;
+		
+		try {
+			//convert reimbursement id to int
+			int reimbId = Integer.parseInt(theReimbursementId);
+			
+			//get connection to database
+			myConn = dataSource.getConnection();
+			
+			//create sql to approve reimb
+			String sql = "update student " 
+					+ "set status= 'A' "
+					+ "where id =?";
+			
+			//prepare statement
+			myStmt = myConn.prepareStatement(sql);
+			
+			//set params
+			myStmt.setInt(1, reimbId);
+			
+			//execute sql statment
+			myStmt.execute();
+		}finally {
+			close(myConn,myStmt,null);
+		}
 		
 	}
 
 	
-	
-	
+
+		
 }

@@ -28,7 +28,7 @@
 		
 		<!-- Information Page Button -->
 		<input type="button" value="Information Page"
-			onclick="window.location.href='manager-information-page.jsp'; return false;"
+			onclick="window.location.href='EmployeeAllControllerServlet'; return false;"
 			class = "information-menu-button"
 		/>
 	</div>

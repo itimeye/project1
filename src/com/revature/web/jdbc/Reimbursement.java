@@ -24,6 +24,14 @@ public class Reimbursement {
 	}
 
 
+	public Reimbursement(int reimbId, int amount, String status) {
+		super();
+		this.reimbId = reimbId;
+		this.status = status;
+		this.amount = amount;
+	}
+
+
 	public int getReimbId() {
 		return reimbId;
 	}

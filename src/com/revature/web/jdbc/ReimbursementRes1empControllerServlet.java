@@ -13,34 +13,31 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 /**
- * Servlet implementation class ReimbursementPenControllerServlet
+ * Servlet implementation class ReimbursementRes1empControllerServlet
  */
-@WebServlet("/ReimbursementResControllerServlet")
-public class ReimbursementResControllerServlet extends HttpServlet {
+@WebServlet("/ReimbursementRes1empControllerServlet")
+public class ReimbursementRes1empControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private ReimbursementResDbUtil reimbursementResDbUtil;
-	
 	@Resource(name="jdbc/test-project1")
 	private DataSource dataSource;
 	
-		
+	private ReimbursementRes1empDbUtil reimbursementRes1DbUtil;
+	
 	@Override
 	public void init() throws ServletException {
 		super.init();
 		
 		try {
-			reimbursementResDbUtil = new ReimbursementResDbUtil(dataSource);
+			reimbursementRes1DbUtil = new ReimbursementRes1empDbUtil(dataSource);
 		}catch(Exception exc){
 			throw new ServletException(exc);
-			
 		}
 	}
 
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		try {
 			String theCommand = request.getParameter("command");
 			
@@ -48,36 +45,27 @@ public class ReimbursementResControllerServlet extends HttpServlet {
 				theCommand = "LIST";
 			}
 			
-			switch (theCommand) {
-			case "LIST":
-				listReimb(request,response);break;
-			case "ADD":
-				addReimb(request,response);break;
-			
+			switch(theCommand) {
+			case"LIST":
+				listreimb1emp(request,response);break;
+			default:
+				listreimb1emp(request,response);
 			}
-			
-		}catch(Exception exc) {
+		}catch(Exception exc){
 			throw new ServletException(exc);
 		}
 	}
 
 
 
-	private void addReimb(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+	private void listreimb1emp(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		List<Reimbursement> reimbursement = ReimbursementRes1empDbUtil.getReimb();
 		
-	}
-
-
-
-	private void listReimb(HttpServletRequest request, HttpServletResponse response) 
-		throws Exception{
-		List<Reimbursement> reimbursements = reimbursementResDbUtil.getReimb();
+		request.setAttribute("REIMB_LIST", reimbursement);
 		
-		request.setAttribute("REIMB_LIST", reimbursements);
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/list-resolved-reimbursements.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/list-1-Res-reimb-emp.jsp");
 		dispatcher.forward(request, response);
+		
 	}
 
 }

@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 
 <html>
@@ -30,18 +31,21 @@
 		
 		<table>
 			<tbody>
-			
+	<!--  			<c:url var= "tempLink" value="ReimbursementControllerServlet">
+					<c:param name="command" value="LOAD"/>
+					<c:param name= "studentId" value="${tempStudent.id }"/> 
+				</c:url> -->
 				<tr>
-<!-- 					<td><label>Employee Id:</label></td>
+ 					<td><label>Employee Id:</label></td>
 					<td><input type="number" name="empId"/> </td>
 				</tr>
-				<tr> -->
+				<tr> 
 					<td><label>Amount:</label></td>
 					<td><input type="number" name="amount"/> </td>
 				</tr>
 				<tr>
 					<td><label></label></td>
-					<td><input type="submit" name="Save" class="save"/> </td>
+					<td><input type="submit" name="Save" class="save"/></td>
 				</tr>
 					
 			</tbody>
